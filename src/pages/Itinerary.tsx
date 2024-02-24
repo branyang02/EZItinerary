@@ -1,6 +1,5 @@
 import {
   Card,
-  Dialog,
   Heading,
   ListItem,
   Pane,
@@ -9,51 +8,28 @@ import {
   Strong,
   UnorderedList,
 } from "evergreen-ui";
-import { useLocation, useNavigate } from "react-router-dom";
 import { ItinDetails } from "../types/ItinDetails";
 import { useEffect, useState } from "react";
 import { getItinDetails } from "../api/ItinService";
 import ItinTimeLine from "../components/TimeLine";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-const countDays = (itinerary: ItinDetails) => {
-  return itinerary.result.itinerary.length;
-};
-
-const Itinerary = () => {
-  const navigate = useNavigate();
-  const query = useQuery();
-  const urlParam = query.get("url");
+const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   const [itineraryDetails, setItineraryDetails] = useState<ItinDetails | null>(
     null
   );
 
   useEffect(() => {
-    if (urlParam) {
-      getItinDetails(urlParam)
+    if (itineraryURL) {
+      getItinDetails(itineraryURL)
         .then(setItineraryDetails)
         .catch((error) => {
           console.error("Failed to fetch itinerary:", error);
         });
     }
-  }, [urlParam]);
+  }, [itineraryURL]);
 
-  if (!urlParam) {
-    return (
-      <Pane>
-        <Dialog
-          isShown
-          title="No URL provided"
-          onCloseComplete={() => navigate("/")}
-          hasFooter={false}
-        >
-          Please provide a URL to view the itinerary.
-        </Dialog>
-      </Pane>
-    );
+  if (!itineraryURL) {
+    return;
   }
 
   if (!itineraryDetails) {
@@ -64,14 +40,15 @@ const Itinerary = () => {
     );
   }
 
-  const numDays = countDays(itineraryDetails);
-
   return (
+    // <Pane>
+    //   <ItinTimeLine itineraryDetails={itineraryDetails} />
+    // </Pane>
     <Pane
       style={{ overflow: "auto", maxHeight: "100vh", alignItems: "center" }}
     >
       <Heading size={900} marginBottom={16}>
-        Your {numDays}-Day Trip to {itineraryDetails.result.travel_location}
+        Your Day Trip to {itineraryDetails.result.travel_location}
       </Heading>
       {itineraryDetails.result.itinerary.map((dayItinerary, index) => (
         <Card

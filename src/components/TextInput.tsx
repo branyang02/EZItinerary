@@ -19,14 +19,7 @@ const TextInputComponent: React.FC = () => {
   };
 
   return (
-    <Pane
-      position="relative"
-      width="70%"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      transform="translateX(21.5%)"
-    >
+    <Pane display="flex">
       <TextInputField
         value={value}
         inputHeight={48}
@@ -39,27 +32,16 @@ const TextInputComponent: React.FC = () => {
             handleSend();
           }
         }}
-        width="100%"
+        width={400}
       />
-      <Pane
-        position="absolute"
-        top="42%"
-        right="0"
-        transform="translateY(-50%)"
-        paddingRight={10}
-      >
-        <SendMessageIcon
-          color="black"
-          style={{ cursor: "pointer" }}
-          onMouseOver={({ currentTarget }) => {
-            currentTarget.style.color = "blue";
-          }}
-          onMouseOut={({ currentTarget }) => {
-            currentTarget.style.color = "black";
-          }}
-          onClick={handleSend}
-        />
-      </Pane>
+      <SendMessageIcon
+        size={24}
+        cursor="pointer"
+        onClick={handleSend}
+        color="#648DE5"
+        marginLeft={20}
+        marginTop={19}
+      />
     </Pane>
   );
 };

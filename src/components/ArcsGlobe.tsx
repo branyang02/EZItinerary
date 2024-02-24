@@ -41,6 +41,7 @@ const ArcsGlobe: React.FC = () => {
       arcDashGap={() => Math.random()}
       arcDashAnimateTime={() => Math.random() * 4000 + 500}
       backgroundColor="#9EB7E5"
+      enablePointerInteraction={false}
     />
   );
 };
