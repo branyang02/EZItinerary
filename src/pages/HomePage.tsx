@@ -37,7 +37,7 @@ function App() {
           <Heading
             size={900}
             marginBottom={32}
-            color={"white"}
+            color={"#E8E5DA"}
             style={{ fontSize: "4rem" }}
           >
             Let's Redefine Travelling

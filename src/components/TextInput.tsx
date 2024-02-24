@@ -19,7 +19,14 @@ const TextInputComponent: React.FC = () => {
   };
 
   return (
-    <Pane position="relative" width="100%">
+    <Pane
+      position="relative"
+      width="70%"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      transform="translateX(21.5%)"
+    >
       <TextInputField
         value={value}
         inputHeight={48}
@@ -36,9 +43,9 @@ const TextInputComponent: React.FC = () => {
       />
       <Pane
         position="absolute"
-        top="50%"
+        top="42%"
         right="0"
-        transform="translateY(-27%)"
+        transform="translateY(-50%)"
         paddingRight={10}
       >
         <SendMessageIcon
