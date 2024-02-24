@@ -1,4 +1,4 @@
-import { Pane, Spinner } from "evergreen-ui";
+import { Alert, Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import { getItinDetails } from "../api/ItinService";
 import TimeLine from "../components/TimeLine";
@@ -43,6 +43,7 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   const [currentCoordinates, setCurrentCoordinates] = useState<Coordinates[]>(
     []
   );
+  const [error, setError] = useState<string | null>(null); // Error state
 
   const handleHighlightChange = (dayIndex: number | null) => {
     console.log("highlighted day:", dayIndex);
@@ -60,6 +61,9 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   };
 
   useEffect(() => {
+    setError(null);
+    setCurrentCoordinates([]);
+    setItineraryDetails(null);
     const fetchItineraryAndCoordinates = async () => {
       if (!itineraryURL) return;
 
@@ -71,11 +75,26 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
         setDayCoordinates(coordsByDay);
       } catch (error) {
         console.error("Failed to fetch itinerary or coordinates:", error);
+        setError("Failed to fetch itinerary details. Please try again later."); // Set error message
       }
     };
 
     fetchItineraryAndCoordinates();
   }, [itineraryURL]);
+
+  if (error) {
+    // Render error page or component when in error state
+    return (
+      <Pane
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <Alert intent="danger" title={error} />
+      </Pane>
+    );
+  }
 
   if (!itineraryURL) {
     return null;
