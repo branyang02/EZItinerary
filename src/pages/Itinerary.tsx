@@ -1,21 +1,20 @@
-import {
-  Card,
-  Heading,
-  ListItem,
-  Pane,
-  Paragraph,
-  Spinner,
-  Strong,
-  UnorderedList,
-} from "evergreen-ui";
-import { ItinDetails } from "../types/ItinDetails";
+import { Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import { getItinDetails } from "../api/ItinService";
+import TimeLine from "../components/TimeLine";
+import { MapComponent } from "../components/Maps";
+import { ItinDetails } from "../types/ItinDetails";
 
 const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   const [itineraryDetails, setItineraryDetails] = useState<ItinDetails | null>(
     null
   );
+  const [highlightedDay, setHighlightedDay] = useState<number | null>(null);
+
+  const handleHighlightChange = (dayIndex: number | null) => {
+    console.log("highlighted day:", dayIndex);
+    setHighlightedDay(dayIndex);
+  };
 
   useEffect(() => {
     if (itineraryURL) {
@@ -28,7 +27,7 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   }, [itineraryURL]);
 
   if (!itineraryURL) {
-    return;
+    return null; // Ensuring a return value for all paths.
   }
 
   if (!itineraryDetails) {
@@ -36,46 +35,26 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
       <Pane
         display="flex"
         flexDirection="column"
-        justifyContent="space-between"
+        justifyContent="center"
+        alignItems="center"
         height="100vh"
       >
         <Spinner />
-        <div />
       </Pane>
     );
   }
 
   return (
-    <Pane
-      style={{ overflow: "auto", maxHeight: "100vh", alignItems: "center" }}
-    >
-      <Heading size={900} marginBottom={16}>
-        Your Day Trip to {itineraryDetails.result.travel_location}
-      </Heading>
-      {itineraryDetails.result.itinerary.map((dayItinerary, index) => (
-        <Card
-          key={index}
-          elevation={1}
-          backgroundColor="white"
-          padding={20}
-          marginY={12}
-          borderRadius={8}
-        >
-          <Heading size={600} marginBottom={16}>
-            Day {dayItinerary.day}
-          </Heading>
-          <UnorderedList>
-            {dayItinerary.activities.map((activity, activityIndex) => (
-              <ListItem key={activityIndex} paddingY={8} borderBottom="default">
-                <Strong size={500}>{activity.activity}</Strong>
-                <Paragraph size={400} marginTop={8}>
-                  {activity.description}
-                </Paragraph>
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Card>
-      ))}
+    <Pane display="flex" height="100vh">
+      <Pane flex="1" overflowY="scroll">
+        <TimeLine
+          itineraryDetails={itineraryDetails}
+          onHighlightChange={handleHighlightChange}
+        />
+      </Pane>
+      <Pane flex="1">
+        <MapComponent />
+      </Pane>
     </Pane>
   );
 };

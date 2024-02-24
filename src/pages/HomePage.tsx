@@ -1,6 +1,6 @@
 import { Pane, Heading, TextInputField, SendMessageIcon } from "evergreen-ui";
-import Itinerary from "./Itinerary";
 import { useEffect, useRef, useState } from "react";
+import Itinerary from "./Itinerary";
 
 function App() {
   const [value, setValue] = useState("");
@@ -68,7 +68,7 @@ function App() {
           />
         </Pane>
       </Pane>
-      <Pane ref={itineraryRef}>
+      <Pane ref={itineraryRef} clearfix>
         <Itinerary itineraryURL={itineraryURL} />
       </Pane>
     </>
