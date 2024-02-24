@@ -81,20 +81,6 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
     return null;
   }
 
-  if (!cityCoordinates) {
-    return (
-      <Pane
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        height="100vh"
-      >
-        <Spinner />
-      </Pane>
-    );
-  }
-
   if (!itineraryDetails) {
     return (
       <Pane

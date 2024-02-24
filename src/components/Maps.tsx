@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const addSingleMarkers = ({
   locations,
   map,
