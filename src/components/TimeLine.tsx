@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Heading,
@@ -17,7 +17,7 @@ const TimeLine = ({
   itineraryDetails: ItinDetails;
   onHighlightChange: (dayIndex: number | null) => void;
 }) => {
-  const [highlightedDay, setHighlightedDay] = useState<number | null>(null);
+  const [highlightedDay, setHighlightedDay] = useState<number | null>();
 
   // Function to toggle the highlighted day
   const toggleHighlight = (dayIndex: number) => {
@@ -25,6 +25,10 @@ const TimeLine = ({
     setHighlightedDay(newHighlight);
     onHighlightChange(newHighlight);
   };
+
+  useEffect(() => {
+    toggleHighlight(0);
+  }, []);
 
   return (
     <Pane>

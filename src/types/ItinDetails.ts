@@ -1,6 +1,7 @@
 interface Activity {
   activity: string;
   description: string;
+  location: string;
 }
 
 interface DayItinerary {

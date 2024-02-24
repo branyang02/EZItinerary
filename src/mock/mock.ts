@@ -1,4 +1,6 @@
-const data = {
+import { ItinDetails } from "../types/ItinDetails";
+
+const data: ItinDetails = {
   result: {
     itinerary: [
       {
@@ -6,17 +8,20 @@ const data = {
           {
             activity: "Visit the Ferry Building",
             description:
-              "Start your trip at the Ferry Building, a hub for local food and artisanal goods. It's great for coffee, pastries, and views of the bay.",
+              "Explore local businesses and farmers market at the Ferry Building.",
+            location: "Ferry Building, San Francisco",
           },
           {
             activity: "Explore North Beach and Chinatown",
             description:
-              "Stroll through these vibrant neighborhoods, enjoying the unique cultural heritage, culinary delights, and colorful murals.",
+              "Stroll through North Beach and Chinatown, experiencing the cultural and historical sites.",
+            location: "North Beach and Chinatown, San Francisco",
           },
           {
-            activity: "End with Alcatraz at Night",
+            activity: "Visit Alcatraz at Night",
             description:
-              "Conclude your day with a night tour of Alcatraz Island, exploring the infamous federal prison with breathtaking views of the city.",
+              "Take a night tour of the former federal prison, Alcatraz Island.",
+            location: "Alcatraz Island, San Francisco",
           },
         ],
         day: 1,
@@ -25,18 +30,21 @@ const data = {
         activities: [
           {
             activity: "Brunch at Zazie",
-            description:
-              "Enjoy a delicious brunch at Zazie, known for its benedicts and cozy atmosphere.",
+            description: "Enjoy brunch at Zazie in the NoPa neighborhood.",
+            location: "Zazie, San Francisco",
           },
           {
-            activity: "Stroll through Golden Gate Park",
+            activity: "Visit Golden Gate Park",
             description:
-              "Spend time exploring the diverse attractions of Golden Gate Park, from its gardens and museums to the peaceful Japanese Tea Garden.",
+              "Explore the attractions within Golden Gate Park like the Japanese Tea Garden and The De Young Museum.",
+            location: "Golden Gate Park, San Francisco",
           },
           {
-            activity: "Sunset at Golden Gate Bridge",
+            activity:
+              "Lands End Trail Hike and Sunset at the Golden Gate Bridge",
             description:
-              "Wrap up the day with a stunning sunset view at the Golden Gate Bridge, perhaps the most iconic landmark of San Francisco.",
+              "Hike the Lands End Trail for coastal views ending with a sunset at the Golden Gate Bridge.",
+            location: "Lands End Trail to Golden Gate Bridge, San Francisco",
           },
         ],
         day: 2,
@@ -46,17 +54,14 @@ const data = {
           {
             activity: "Breakfast + Coffee in NoPa",
             description:
-              "Start your day in the North of the Panhandle area with exceptional coffee and a hearty breakfast.",
+              "Start the day with breakfast and coffee in the NoPa neighborhood.",
+            location: "NoPa, San Francisco",
           },
           {
             activity: "Explore the Mission District",
             description:
-              "Dive into the Mission District, known for its vibrant street art, delicious food scene, and the lively Dolores Park.",
-          },
-          {
-            activity: "Dinner and Drinks in the Mission",
-            description:
-              "End your day experiencing the nightlife in the Mission, with choices ranging from upscale dining to cozy bars.",
+              "Spend the day walking through the Mission District, enjoying its food, drinks, and Dolores Park.",
+            location: "Mission District, San Francisco",
           },
         ],
         day: 3,
@@ -64,14 +69,10 @@ const data = {
       {
         activities: [
           {
-            activity: "Option 1: Wine Tasting in Sonoma",
+            activity: "Choose Your Adventure - Wine Tasting or Hike in Marin",
             description:
-              "Venture out on a day trip to Sonoma for some wine tasting in a picturesque setting. (Or choose another suggested day trip.)",
-          },
-          {
-            activity: "Option 2: Hike in Marin County + Muir Woods",
-            description:
-              "Alternatively, enjoy a hike in Marin County with a visit to the stunning Muir Woods National Monument.",
+              "Option to go wine tasting in Sonoma or hiking in Marin County plus Muir Woods.",
+            location: "Sonoma or Marin County, San Francisco",
           },
         ],
         day: 4,
