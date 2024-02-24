@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Pane, TextInputField, SendMessageIcon } from "evergreen-ui";
-
-function createNewPathFromUrl(url: string): string {
-  const pathWithSlash = url.replace(/(^\w+:|^)\/\/.*?\//, "/");
-  const newPath = pathWithSlash.endsWith("/")
-    ? pathWithSlash.slice(0, -1)
-    : pathWithSlash;
-  return newPath;
-}
+import { useNavigate } from "react-router-dom";
 
 const TextInputComponent: React.FC = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const placeholder = "Enter a destination, or a link to a travel blog";
 
   const handleSend = () => {
-    console.log("Send action triggered"); // Replace this with your actual send logic
+    const baseUrl = "/itinerary";
+    const params = new URLSearchParams();
+
+    params.append("url", value);
+
+    const finalUrl = `${baseUrl}?${params.toString()}`;
+
+    navigate(finalUrl);
   };
 
   return (
