@@ -6,6 +6,8 @@ async function getItinDetails(url: string): Promise<ItinDetails> {
     // const response = await fetch(url);
     // const data: ItinDetails = await response.json();
     // const data: ItinDetails =
+    // mock delay
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);

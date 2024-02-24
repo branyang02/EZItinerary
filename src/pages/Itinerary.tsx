@@ -11,7 +11,6 @@ import {
 import { ItinDetails } from "../types/ItinDetails";
 import { useEffect, useState } from "react";
 import { getItinDetails } from "../api/ItinService";
-import ItinTimeLine from "../components/TimeLine";
 
 const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   const [itineraryDetails, setItineraryDetails] = useState<ItinDetails | null>(
@@ -34,16 +33,19 @@ const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
 
   if (!itineraryDetails) {
     return (
-      <Pane>
+      <Pane
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+        height="100vh"
+      >
         <Spinner />
+        <div />
       </Pane>
     );
   }
 
   return (
-    // <Pane>
-    //   <ItinTimeLine itineraryDetails={itineraryDetails} />
-    // </Pane>
     <Pane
       style={{ overflow: "auto", maxHeight: "100vh", alignItems: "center" }}
     >
