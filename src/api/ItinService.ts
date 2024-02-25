@@ -4,7 +4,7 @@ import { ItinDetails } from "../types/ItinDetails";
 async function getItinDetails(url: string): Promise<ItinDetails> {
   try {
     // Use the fetch API to POST the data
-    const response = await fetch("https://itine-backend.vercel.app/", {
+    const response = await fetch("http://127.0.0.1:5001/", {
       method: "POST", // Change the method to POST
       headers: {
         "Content-Type": "application/json", // Specify the content type in the headers
