@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Card,
   Heading,
@@ -25,10 +25,6 @@ const TimeLine = ({
     setHighlightedDay(newHighlight);
     onHighlightChange(newHighlight);
   };
-
-  useEffect(() => {
-    toggleHighlight(0);
-  }, []);
 
   return (
     <Pane>

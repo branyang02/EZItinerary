@@ -31,51 +31,57 @@ export const GoogleMapsWrapper = ({
   return <Wrapper apiKey={apiKey}>{children}</Wrapper>;
 };
 
-const DEFAULT_CENTER = { lat: 48.8566, lng: 2.3522 };
 const DEFAULT_ZOOM = 7;
 
 export const GoogleMaps = ({
   locations,
+  cityCoordinates,
   className,
 }: {
-  locations: ReadonlyArray<google.maps.LatLngLiteral>;
+  locations?: ReadonlyArray<google.maps.LatLngLiteral> | null | undefined;
+  cityCoordinates?: google.maps.LatLngLiteral | null | undefined;
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<google.maps.Map>();
+  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
 
   useEffect(() => {
     if (ref.current && !map) {
-      // Initialize the map only once
       const initMap = new window.google.maps.Map(ref.current, {
-        center: DEFAULT_CENTER,
+        center: cityCoordinates,
         zoom: DEFAULT_ZOOM,
         gestureHandling: "greedy",
       });
       setMap(initMap);
     }
-  }, [ref]);
+  }, [ref, cityCoordinates]);
 
   useEffect(() => {
-    if (map && locations.length > 0) {
-      // Remove previous markers
-      // Ideally, keep track of markers to remove them before adding new ones
+    if (map && locations) {
+      // Clear existing markers
+      markers.forEach((marker) => marker.setMap(null));
 
-      // Add new markers
-      const markers = addSingleMarkers({ locations, map });
+      // Create new markers and add them to the map
+      const newMarkers = locations.map((location) => {
+        return new google.maps.Marker({
+          position: location,
+          map,
+        });
+      });
+
+      // Update the global marker state with the new markers
+      setMarkers(newMarkers);
 
       // If there's only one location, pan to it
       if (locations.length === 1) {
         map.panTo(locations[0]);
-      } else {
+      } else if (locations.length > 1) {
         // Fit map to bounds if multiple locations
         const bounds = new google.maps.LatLngBounds();
         locations.forEach((location) => bounds.extend(location));
         map.fitBounds(bounds);
       }
-
-      // Cleanup function to remove markers when component unmounts or locations change
-      return () => markers.forEach((marker) => marker.setMap(null));
     }
   }, [locations, map]);
 
@@ -88,15 +94,15 @@ export const GoogleMaps = ({
   );
 };
 
-interface Coordinates {
-  lat: number;
-  lng: number;
-}
 interface MapComponentProps {
-  locations: Coordinates[];
+  locations: google.maps.LatLngLiteral[] | null;
+  cityCoordinates: google.maps.LatLngLiteral | null;
 }
-export const MapComponent = ({ locations }: MapComponentProps) => (
+export const MapComponent = ({
+  locations,
+  cityCoordinates,
+}: MapComponentProps) => (
   <GoogleMapsWrapper>
-    <GoogleMaps locations={locations} />
+    <GoogleMaps locations={locations} cityCoordinates={cityCoordinates} />
   </GoogleMapsWrapper>
 );
