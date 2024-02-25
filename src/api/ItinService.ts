@@ -1,29 +1,17 @@
 import { ItinDetails } from "../types/ItinDetails";
+
 // import data from "../mock/mock";
 
 async function getItinDetails(url: string): Promise<ItinDetails> {
   try {
-    // Use the fetch API to POST the data
-    const response = await fetch("http://127.0.0.1:5001/", {
-      method: "POST", // Change the method to POST
-      headers: {
-        "Content-Type": "application/json", // Specify the content type in the headers
-      },
-      body: JSON.stringify({ url }), // Send the URL in the body as a JSON object
-    });
-
-    // Check if the response is ok (status in the range 200-299)
-    if (!response.ok) {
-      throw new Error(
-        `Network response was not ok, status: ${response.status}`
-      );
-    }
-
-    const data: ItinDetails = await response.json(); // Parse the JSON response into a TypeScript object
+    const response = await fetch(
+      `http://127.0.0.1:5002/?url=${encodeURIComponent(url)}`
+    );
+    const data: ItinDetails = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error; // Rethrow the error to be handled by the caller
+    throw error;
   }
 }
 
