@@ -9,6 +9,7 @@ import {
   UnorderedList,
 } from "evergreen-ui";
 import { ItinDetails } from "../types/ItinDetails";
+import "../styles/TimeLine.css";
 
 const TimeLine = ({
   itineraryDetails,
@@ -28,8 +29,12 @@ const TimeLine = ({
 
   return (
     <Pane>
-      <Heading size={900} marginBottom={16}>
-        Your Day Trip to {itineraryDetails.result.travel_location}
+      <Heading
+        size={900}
+        marginBottom={16}
+        fontFamily="Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif"
+      >
+        Your Trip to {itineraryDetails.result.travel_location}
       </Heading>
       {itineraryDetails.result.itinerary.map((dayItinerary, index) => (
         <Card

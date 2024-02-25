@@ -2,20 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { Wrapper } from "@googlemaps/react-wrapper";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const addSingleMarkers = ({
-  locations,
-  map,
-}: {
-  locations: ReadonlyArray<google.maps.LatLngLiteral>;
-  map: google.maps.Map | null | undefined;
-}) =>
-  locations.map(
-    (position) =>
-      new google.maps.Marker({
-        position,
-        map,
-      })
-  );
+// export const addSingleMarkers = ({
+//   locations,
+//   map,
+// }: {
+//   locations: ReadonlyArray<google.maps.LatLngLiteral>;
+//   map: google.maps.Map | null | undefined;
+// }) =>
+//   locations.map(
+//     (position) =>
+//       new google.maps.Marker({
+//         position,
+//         map,
+//       })
+//   );
 
 export const GoogleMapsWrapper = ({
   children,
