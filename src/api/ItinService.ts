@@ -1,13 +1,23 @@
 import { ItinDetails } from "../types/ItinDetails";
+import axios from "axios";
 
 // import data from "../mock/mock";
 
 async function getItinDetails(url: string): Promise<ItinDetails> {
   try {
-    const response = await fetch(
-      `http://127.0.0.1:5002/?url=${encodeURIComponent(url)}`
+    const response = await axios.post(
+      "https://itine-backend.vercel.app/api/itinerary",
+      {
+        url, // This sends the URL in the body of the POST request
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-    const data: ItinDetails = await response.json();
+
+    const data: ItinDetails = response.data;
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
