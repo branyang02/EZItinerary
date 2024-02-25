@@ -1,33 +1,70 @@
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
+import { useState } from "react";
+import {
+  Card,
+  Heading,
+  ListItem,
+  Pane,
+  Paragraph,
+  Strong,
+  UnorderedList,
+} from "evergreen-ui";
+import { ItinDetails } from "../types/ItinDetails";
+import "../styles/TimeLine.css";
 
-export default function ItinTimeLine() {
+const TimeLine = ({
+  itineraryDetails,
+  onHighlightChange,
+}: {
+  itineraryDetails: ItinDetails;
+  onHighlightChange: (dayIndex: number | null) => void;
+}) => {
+  const [highlightedDay, setHighlightedDay] = useState<number | null>();
+
+  // Function to toggle the highlighted day
+  const toggleHighlight = (dayIndex: number) => {
+    const newHighlight = highlightedDay === dayIndex ? null : dayIndex;
+    setHighlightedDay(newHighlight);
+    onHighlightChange(newHighlight);
+  };
+
   return (
-    <Timeline>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Eat</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Code</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot />
-        </TimelineSeparator>
-        <TimelineContent>Sleep</TimelineContent>
-      </TimelineItem>
-    </Timeline>
+    <Pane>
+      <Heading
+        size={900}
+        marginBottom={16}
+        fontFamily="Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif"
+      >
+        Your Trip to {itineraryDetails.result.travel_location}
+      </Heading>
+      {itineraryDetails.result.itinerary.map((dayItinerary, index) => (
+        <Card
+          float="left"
+          key={index}
+          elevation={highlightedDay === index ? 4 : 1}
+          padding={20}
+          marginY={12}
+          borderRadius={8}
+          onClick={() => toggleHighlight(index)}
+          cursor="pointer"
+          width="100%"
+        >
+          <Heading size={600} marginBottom={16}>
+            Day {dayItinerary.day}
+          </Heading>
+          <UnorderedList>
+            {dayItinerary.activities.map((activity, activityIndex) => (
+              <ListItem key={activityIndex} paddingY={8} borderBottom="default">
+                <Strong size={500}>{activity.activity}</Strong>
+                <Paragraph size={400} marginTop={8}>
+                  {activity.description}
+                </Paragraph>
+              </ListItem>
+            ))}
+          </UnorderedList>
+        </Card>
+      ))}
+    </Pane>
   );
-}
+};
+
+export default TimeLine;

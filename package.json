@@ -12,10 +12,13 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@mui/lab": "^5.0.0-alpha.165",
     "@mui/material": "^5.15.10",
+    "@types/google.maps": "^3.55.3",
     "@types/three": "^0.161.2",
     "evergreen-ui": "^7.1.9",
+    "openai": "^4.28.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.27.2",
@@ -23,6 +26,7 @@
     "three": "^0.161.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.6",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",

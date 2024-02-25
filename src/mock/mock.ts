@@ -1,22 +1,21 @@
-const data = {
+import { ItinDetails } from "../types/ItinDetails";
+
+const data: ItinDetails = {
   result: {
     itinerary: [
       {
         activities: [
           {
-            activity: "Visit the Ferry Building",
+            activity: "Carowinds",
             description:
-              "Start your trip at the Ferry Building, a hub for local food and artisanal goods. It's great for coffee, pastries, and views of the bay.",
+              "Seasonal, family-friendly amusement park featuring towering roller coasters, waterslides & more.",
+            location: "Charlotte, NC 28202, USA",
           },
           {
-            activity: "Explore North Beach and Chinatown",
+            activity: "Whitehall Commons",
             description:
-              "Stroll through these vibrant neighborhoods, enjoying the unique cultural heritage, culinary delights, and colorful murals.",
-          },
-          {
-            activity: "End with Alcatraz at Night",
-            description:
-              "Conclude your day with a night tour of Alcatraz Island, exploring the infamous federal prison with breathtaking views of the city.",
+              "Whitehall Commons is a shopping mall with several restaurants next to a Walmart and Lowe's complex. It is a popular place for take-out or dinner, with national chain restaurants available.",
+            location: "Charlotte, NC 28202, USA",
           },
         ],
         day: 1,
@@ -24,19 +23,34 @@ const data = {
       {
         activities: [
           {
-            activity: "Brunch at Zazie",
+            activity: "SouthPark",
             description:
-              "Enjoy a delicious brunch at Zazie, known for its benedicts and cozy atmosphere.",
+              "This retail chain is focused on providing comfortable yet stylish shoes for men, women & kids.",
+            location: "4400 Sharon Rd, Charlotte, NC 28211, USA",
           },
           {
-            activity: "Stroll through Golden Gate Park",
+            activity: "Sleepy Poet Antique Mall",
             description:
-              "Spend time exploring the diverse attractions of Golden Gate Park, from its gardens and museums to the peaceful Japanese Tea Garden.",
+              "Single-storey brick building packed with dealers selling antiques, collectables & vintage items.",
+            location: "Charlotte, NC 28202, USA",
           },
           {
-            activity: "Sunset at Golden Gate Bridge",
+            activity: "The Olde Mecklenburg Brewery & Biergarten",
             description:
-              "Wrap up the day with a stunning sunset view at the Golden Gate Bridge, perhaps the most iconic landmark of San Francisco.",
+              "Spacious brewery with a pub & 8-acre beer garden offering its house brews in a lively setting.",
+            location: "4150 Yancey Rd, Charlotte, NC 28217, USA",
+          },
+          {
+            activity: "NASCAR Hall of Fame",
+            description:
+              "Shrine to stock-car drivers past & present, plus a museum with interactive exhibits & a theater.",
+            location: "400 E M.L.K. Jr Blvd, Charlotte, NC 28202, USA",
+          },
+          {
+            activity: "Freedom Park",
+            description:
+              "A lakeside bandshell anchors this large park, which also has sports fields, a playground & trails.",
+            location: "1908 East Blvd, Charlotte, NC 28203, USA",
           },
         ],
         day: 2,
@@ -44,19 +58,34 @@ const data = {
       {
         activities: [
           {
-            activity: "Breakfast + Coffee in NoPa",
+            activity: "Charlotte Premium Outlets",
             description:
-              "Start your day in the North of the Panhandle area with exceptional coffee and a hearty breakfast.",
+              "The Charlotte Premium Outlets offers high-end fashion and luxury brands at 25 to 65 percent savings every day. It has various designer and luxury brands with many other brand manufacturers.",
+            location: "Charlotte, NC 28202, USA",
           },
           {
-            activity: "Explore the Mission District",
+            activity: "McDowell Nature Preserve",
             description:
-              "Dive into the Mission District, known for its vibrant street art, delicious food scene, and the lively Dolores Park.",
+              "This mostly undeveloped preserve with a lake has a nature center, campground, trails & play areas.",
+            location: "15222 York Rd, Charlotte, NC 28278, USA",
           },
           {
-            activity: "Dinner and Drinks in the Mission",
+            activity: "Charlotte Regional Farmers Market",
             description:
-              "End your day experiencing the nightlife in the Mission, with choices ranging from upscale dining to cozy bars.",
+              "Airy venue where small-scale farmers, bakers & artisans gather to sell their locally-produced goods.",
+            location: "Charlotte, NC 28202, USA",
+          },
+          {
+            activity: "Billy Graham Library",
+            description:
+              "Large library dedicated to religious leader Billy Graham, plus his original home with tours.",
+            location: "4330 Westmont Dr, Charlotte, NC 28217, USA",
+          },
+          {
+            activity: "CLT Airport Overlook",
+            description:
+              "Informal outdoor spot offering benches facing the airport runway to view plane landings & take-offs.",
+            location: "Charlotte, NC 28202, USA",
           },
         ],
         day: 3,
@@ -64,20 +93,34 @@ const data = {
       {
         activities: [
           {
-            activity: "Option 1: Wine Tasting in Sonoma",
+            activity: "U.S. National Whitewater Center",
             description:
-              "Venture out on a day trip to Sonoma for some wine tasting in a picturesque setting. (Or choose another suggested day trip.)",
+              "Recreation grounds with whitewater rafting, canoeing, kayaking, rappelling, rock climbing & more.",
+            location: "5000 Whitewater Center Pkwy, Charlotte, NC 28214, USA",
           },
           {
-            activity: "Option 2: Hike in Marin County + Muir Woods",
+            activity: "Sullenberger Aviation Museum",
             description:
-              "Alternatively, enjoy a hike in Marin County with a visit to the stunning Muir Woods National Monument.",
+              "A collection of commercial, military & civil aircraft, plus aviation artifacts & memorabilia.",
+            location: "4672 1st Flight Dr, Charlotte, NC 28208, USA",
+          },
+          {
+            activity: "Bank of America Stadium",
+            description:
+              "74,000-seat football stadium, home of the NFL's Carolina Panthers & host of college teams.",
+            location: "800 S Mint St, Charlotte, NC 28202, USA",
+          },
+          {
+            activity: "The Underground",
+            description:
+              "This standing-room-only venue at the Fillmore Charlotte stages high-energy, indie band shows.",
+            location: "Charlotte, NC 28202, USA",
           },
         ],
         day: 4,
       },
     ],
-    travel_location: "San Francisco",
+    travel_location: "Charlotte, North Carolina",
   },
 };
 

@@ -33,14 +33,14 @@ const ArcsGlobe: React.FC = () => {
 
   return (
     <Globe
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+      globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
       bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
       arcsData={arcsData}
       arcColor={"color"}
       arcDashLength={() => Math.random()}
       arcDashGap={() => Math.random()}
       arcDashAnimateTime={() => Math.random() * 4000 + 500}
-      backgroundColor="#9EB7E5"
+      backgroundColor="#0A1128"
     />
   );
 };

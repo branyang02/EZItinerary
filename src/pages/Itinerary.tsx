@@ -1,102 +1,141 @@
-import {
-  Card,
-  Dialog,
-  Heading,
-  ListItem,
-  Pane,
-  Paragraph,
-  Spinner,
-  Strong,
-  UnorderedList,
-} from "evergreen-ui";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ItinDetails } from "../types/ItinDetails";
+import { Alert, Pane, Spinner } from "evergreen-ui";
 import { useEffect, useState } from "react";
 import { getItinDetails } from "../api/ItinService";
-import ItinTimeLine from "../components/TimeLine";
+import TimeLine from "../components/TimeLine";
+import { MapComponent } from "../components/Maps";
+import { ItinDetails } from "../types/ItinDetails";
+import { geoCode } from "../api/ItinService";
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
+interface Locations {
+  day: number;
+  coordinates: google.maps.LatLngLiteral[];
 }
 
-const countDays = (itinerary: ItinDetails) => {
-  return itinerary.result.itinerary.length;
+const fetchCoordinatesByDay = async (
+  itineraryDetails: ItinDetails
+): Promise<Locations[]> => {
+  const dayCoordinatesPromises = itineraryDetails.result.itinerary.map(
+    async (dayItinerary) => {
+      const activitiesCoordinates = await Promise.all(
+        dayItinerary.activities.map((activity) => geoCode(activity.location))
+      );
+      return {
+        day: dayItinerary.day,
+        coordinates: activitiesCoordinates,
+      };
+    }
+  );
+
+  return Promise.all(dayCoordinatesPromises);
 };
 
-const Itinerary = () => {
-  const navigate = useNavigate();
-  const query = useQuery();
-  const urlParam = query.get("url");
+const Itinerary = ({ itineraryURL }: { itineraryURL: string }) => {
   const [itineraryDetails, setItineraryDetails] = useState<ItinDetails | null>(
     null
   );
+  const [dayCoordinates, setDayCoordinates] = useState<Locations[] | null>(
+    null
+  );
+  const [currentCoordinates, setCurrentCoordinates] = useState<
+    google.maps.LatLngLiteral[]
+  >([]);
+  const [cityCoordinates, setCityCoordinates] =
+    useState<google.maps.LatLngLiteral | null>(null);
+
+  const [error, setError] = useState<string | null>(null); // Error state
+
+  const handleHighlightChange = (dayIndex: number | null) => {
+    console.log("highlighted day:", dayIndex);
+
+    if (dayIndex !== null && dayCoordinates) {
+      const selectedDayCoordinates = dayCoordinates[dayIndex]?.coordinates;
+
+      if (selectedDayCoordinates) {
+        setCurrentCoordinates(selectedDayCoordinates);
+        console.log("selectedDayCoordinates:", selectedDayCoordinates);
+      } else {
+        setCurrentCoordinates([]);
+      }
+    }
+  };
 
   useEffect(() => {
-    if (urlParam) {
-      getItinDetails(urlParam)
-        .then(setItineraryDetails)
-        .catch((error) => {
-          console.error("Failed to fetch itinerary:", error);
-        });
-    }
-  }, [urlParam]);
+    setError(null);
+    setCurrentCoordinates([]);
+    setItineraryDetails(null);
+    setDayCoordinates(null);
+    const fetchItineraryAndCoordinates = async () => {
+      if (!itineraryURL) return;
 
-  if (!urlParam) {
+      try {
+        // 1. Fetch itinerary details
+        const details = await getItinDetails(itineraryURL);
+        setItineraryDetails(details);
+
+        // 2. Fetch Destination City Coordinates
+        const cityCoordinates = await geoCode(details.result.travel_location);
+        setCityCoordinates(cityCoordinates);
+        console.log("cityCoordinates:", cityCoordinates);
+
+        console.log("itineraryDetails:", details);
+        // 3. Fetch coordinates for each day
+        const coordsByDay = await fetchCoordinatesByDay(details);
+        setDayCoordinates(coordsByDay);
+      } catch (error) {
+        console.error("Failed to fetch itinerary or coordinates:", error);
+        setError("Failed to fetch itinerary details. Please try again later.");
+      }
+    };
+
+    fetchItineraryAndCoordinates();
+  }, [itineraryURL]);
+
+  if (error) {
+    // Render error page or component when in error state
     return (
-      <Pane>
-        <Dialog
-          isShown
-          title="No URL provided"
-          onCloseComplete={() => navigate("/")}
-          hasFooter={false}
-        >
-          Please provide a URL to view the itinerary.
-        </Dialog>
+      <Pane
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <Alert intent="danger" title={error} />
       </Pane>
     );
   }
 
+  if (!itineraryURL) {
+    return null;
+  }
+
   if (!itineraryDetails) {
     return (
-      <Pane>
+      <Pane
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
         <Spinner />
       </Pane>
     );
   }
 
-  const numDays = countDays(itineraryDetails);
-
   return (
-    <Pane
-      style={{ overflow: "auto", maxHeight: "100vh", alignItems: "center" }}
-    >
-      <Heading size={900} marginBottom={16}>
-        Your {numDays}-Day Trip to {itineraryDetails.result.travel_location}
-      </Heading>
-      {itineraryDetails.result.itinerary.map((dayItinerary, index) => (
-        <Card
-          key={index}
-          elevation={1}
-          backgroundColor="white"
-          padding={20}
-          marginY={12}
-          borderRadius={8}
-        >
-          <Heading size={600} marginBottom={16}>
-            Day {dayItinerary.day}
-          </Heading>
-          <UnorderedList>
-            {dayItinerary.activities.map((activity, activityIndex) => (
-              <ListItem key={activityIndex} paddingY={8} borderBottom="default">
-                <Strong size={500}>{activity.activity}</Strong>
-                <Paragraph size={400} marginTop={8}>
-                  {activity.description}
-                </Paragraph>
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Card>
-      ))}
+    <Pane display="flex" height="100vh">
+      <Pane flex="1" overflowY="scroll">
+        <TimeLine
+          itineraryDetails={itineraryDetails}
+          onHighlightChange={handleHighlightChange}
+        />
+      </Pane>
+      <Pane flex="1">
+        <MapComponent
+          locations={currentCoordinates}
+          cityCoordinates={cityCoordinates}
+        />
+      </Pane>
     </Pane>
   );
 };
