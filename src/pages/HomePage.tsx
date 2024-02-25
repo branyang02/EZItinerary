@@ -47,9 +47,13 @@ function App() {
           zIndex={2}
         >
           <Heading
-            size={600}
-            style={{ fontSize: "4rem" }}
-            fontFamily="Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif"
+            // size={900}
+            style={{
+              fontWeight: "normal",
+              fontSize: "3rem",
+              fontFamily:
+                "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif",
+            }}
             color="#E7E5DF"
           >
             ItineTailor
@@ -80,6 +84,7 @@ function App() {
             marginBottom={32}
             color={"#E7E5DF"}
             style={{ fontSize: "4rem" }}
+            fontWeight="normal"
             fontFamily="Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif"
           >
             Let's Redefine Travelling
